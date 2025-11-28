@@ -11,11 +11,25 @@ import { webhookRouter } from "./routes/webhookRoutes.js";
 
 const app = express();
 
+
+cors({
+  origin: [
+    "http://localhost:5173",
+    "https://your-frontend.vercel.app"
+  ],
+  credentials: true
+})
+
+
+
 app.use(
   cors({
-    origin: config.clientBaseUrl,
-    credentials: true
-  })
+  origin: [
+    "http://localhost:5173",
+    "https://airtable-6cem.vercel.app/"
+  ],
+  credentials: true
+})
 );
 app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
