@@ -26,7 +26,7 @@ app.use(
   cors({
   origin: [
     "http://localhost:5173",
-    "https://airtable-6cem.vercel.app/"
+    "https://airtable-6cem.vercel.app"
   ],
   credentials: true
 })
