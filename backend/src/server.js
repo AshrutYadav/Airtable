@@ -1,3 +1,4 @@
+// backend/index.js
 import "express-async-errors";
 import express from "express";
 import mongoose from "mongoose";
@@ -11,36 +12,36 @@ import { webhookRouter } from "./routes/webhookRoutes.js";
 
 const app = express();
 
-
-cors({
-  origin: [
-    "http://localhost:5173",
-    "https://your-frontend.vercel.app"
-  ],
-  credentials: true
-})
-
-
-
+// CORS - allow local dev + your deployed frontend(s)
+// IMPORTANT: replace "https://airtable-6cem.vercel.app" and any "your-frontend..." with your actual Vercel domain(s)
 app.use(
   cors({
-  origin: [
-    "http://localhost:5173",
-    "https://airtable-6cem.vercel.app"
-  ],
-  credentials: true
-})
+    origin: [
+      "http://localhost:5173",               // local dev
+      "https://airtable-6cem.vercel.app",    // deployed frontend - replace if different
+      // "https://your-frontend.vercel.app"  // add additional production domains if needed
+    ],
+    credentials: true,
+  })
 );
+
 app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
+
+// Root & health routes
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 
 app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
+
+// Debug helpers (non-sensitive summaries)
 app.get("/debug/oauth-config", (req, res) => {
   const clientId = config.airtable.clientId || "";
   const clientSecret = config.airtable.clientSecret || "";
-  
+
   res.json({
     hasClientId: !!clientId,
     clientIdLength: clientId.length,
@@ -61,10 +62,11 @@ app.get("/debug/oauth-config", (req, res) => {
     }
   });
 });
+
 app.get("/debug/user-token", async (req, res) => {
   const token = req.cookies?.token || req.headers.authorization?.replace("Bearer ", "");
   if (!token) {
-    return res.json({ 
+    return res.json({
       error: "No token provided",
       hint: "Make sure you're logged in. The token is stored in a cookie, so access this from the same browser where you logged in."
     });
@@ -89,28 +91,43 @@ app.get("/debug/user-token", async (req, res) => {
   }
 });
 
+// API routers
 app.use("/auth", authRouter);
 app.use("/api/airtable", airtableMetaRouter);
 app.use("/api/forms", formRouter);
 app.use("/webhooks", webhookRouter);
 
+// Error handler
 app.use((err, req, res, next) => {
-  console.error("Error:", err.message);
-  if (err.stack) {
+  console.error("Error:", err?.message || err);
+  if (err?.stack) {
     console.error(err.stack);
   }
+
+  // redirect for the Airtable OAuth callback if that route errors
   if (req.path === "/auth/airtable/callback") {
     return res.redirect(`${config.clientBaseUrl}?error=${encodeURIComponent(err.message || "Authentication failed")}`);
   }
-  
-  res.status(err.status || 500).json({ error: err.message || "Internal Server Error" });
+
+  res.status(err?.status || 500).json({ error: err?.message || "Internal Server Error" });
 });
 
+// Start function with safe connect practices
 async function start() {
-  await mongoose.connect(config.mongoUri);
+  // Connect to MongoDB
+  if (!config.mongoUri) {
+    throw new Error("Missing MONGODB_URI in environment - cannot connect to database");
+  }
+  await mongoose.connect(config.mongoUri, {
+    // recommended options can be added if needed
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true
+  });
   console.log("Connected to MongoDB");
-  app.listen(config.port, () => {
-    console.log(`Server running on port ${config.port}`);
+
+  const port = config.port;
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
   });
 }
 
@@ -122,5 +139,3 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 export default app;
-
-
