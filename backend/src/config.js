@@ -5,26 +5,25 @@ dotenv.config();
 export const config = {
   port: Number(process.env.PORT) || 4000,
 
-  // MUST use Render's MONGODB_URI (your value was okay)
-  mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/airtable-form-builder",
+  mongoUri: process.env.MONGODB_URI,
 
-  jwtSecret: process.env.JWT_SECRET || "dev_jwt_secret_change_me",
+  jwtSecret: process.env.JWT_SECRET,
 
-  // IMPORTANT: for production, set CLIENT_BASE_URL in Render
-  clientBaseUrl: process.env.CLIENT_BASE_URL || "http://localhost:5173",
+
+  clientBaseUrl: process.env.CLIENT_BASE_URL,
 
   airtable: {
-    clientId: process.env.AIRTABLE_CLIENT_ID || "",
-    clientSecret: process.env.AIRTABLE_CLIENT_SECRET || "",
-    redirectUri: process.env.AIRTABLE_REDIRECT_URI || "http://localhost:4000/auth/airtable/callback",
+    clientId: process.env.AIRTABLE_CLIENT_ID,
+    clientSecret: process.env.AIRTABLE_CLIENT_SECRET,
+    redirectUri: process.env.AIRTABLE_REDIRECT_URI,
 
-    apiBaseUrl: process.env.AIRTABLE_API_BASE_URL || "https://api.airtable.com/v0",
+    apiBaseUrl: process.env.AIRTABLE_API_BASE_URL,
 
-    oauthAuthorizeUrl: process.env.AIRTABLE_OAUTH_AUTHORIZE_URL || "https://airtable.com/oauth2/v1/authorize",
-    oauthTokenUrl: process.env.AIRTABLE_OAUTH_TOKEN_URL || "https://airtable.com/oauth2/v1/token"
+    oauthAuthorizeUrl: process.env.AIRTABLE_OAUTH_AUTHORIZE_URL,
+    oauthTokenUrl: process.env.AIRTABLE_OAUTH_TOKEN_URL
   },
 
   webhook: {
-    airtableVerificationToken: process.env.AIRTABLE_WEBHOOK_VERIFICATION_TOKEN || ""
+    airtableVerificationToken: process.env.AIRTABLE_WEBHOOK_VERIFICATION_TOKEN
   }
 };
