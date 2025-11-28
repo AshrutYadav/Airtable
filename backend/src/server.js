@@ -17,7 +17,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://airtable-drab.vercel.app/",
+      "https://airtable-drab.vercel.app",
     ],
     credentials: true,
   })
