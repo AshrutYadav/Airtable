@@ -12,14 +12,12 @@ import { webhookRouter } from "./routes/webhookRoutes.js";
 
 const app = express();
 
-// CORS - allow local dev + your deployed frontend(s)
-// IMPORTANT: replace "https://airtable-6cem.vercel.app" and any "your-frontend..." with your actual Vercel domain(s)
+
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",               // local dev
-      "https://airtable-6cem.vercel.app",    // deployed frontend - replace if different
-      // "https://your-frontend.vercel.app"  // add additional production domains if needed
+      "http://localhost:5173",
+      "https://airtable-drab.vercel.app/",
     ],
     credentials: true,
   })
