@@ -15,9 +15,9 @@ services:
       - key: CLIENT_BASE_URL
         value: https://airtable-drab.vercel.app
       - key: MONGODB_URI
-        value: 
+        value: mongodb+srv://ashrutyadav29_db_user:srn2L9J345YpuAD0@cluster0.llsbwrd.mongodb.net
       - key: JWT_SECRET
-        value: 
+        value: jwt_Secret_string942
       - key: AIRTABLE_CLIENT_ID
         value: 85909758-93d3-4dd1-b13c-59e43172e5a0
       - key: AIRTABLE_CLIENT_SECRET
