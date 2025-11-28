@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: airtable-form-builder-api
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: CLIENT_BASE_URL
+        value: https://your-vercel-frontend.vercel.app
+      - key: MONGODB_URI
+      - key: JWT_SECRET
+      - key: AIRTABLE_CLIENT_ID
+      - key: AIRTABLE_CLIENT_SECRET
+      - key: AIRTABLE_REDIRECT_URI
+      - key: AIRTABLE_WEBHOOK_VERIFICATION_TOKEN
+      - key: AIRTABLE_API_BASE_URL
+        value: https://api.airtable.com/v0
+      - key: AIRTABLE_OAUTH_AUTHORIZE_URL
+        value: https://airtable.com/oauth2/v1/authorize
+      - key: AIRTABLE_OAUTH_TOKEN_URL
+        value: https://airtable.com/oauth2/v1/token
+
