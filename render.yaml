@@ -15,11 +15,17 @@ services:
       - key: CLIENT_BASE_URL
         value: https://airtable-drab.vercel.app
       - key: MONGODB_URI
+        value: 
       - key: JWT_SECRET
+        value: 
       - key: AIRTABLE_CLIENT_ID
+        value: 85909758-93d3-4dd1-b13c-59e43172e5a0
       - key: AIRTABLE_CLIENT_SECRET
+        value: 73af23545c7d8221c9489744c9159e4e10dccd3330a08f7f7322f9d0738c8152
       - key: AIRTABLE_REDIRECT_URI
+        value: https://airtable-form-builder-api-ebzi.onrender.com/auth/airtable/callback
       - key: AIRTABLE_WEBHOOK_VERIFICATION_TOKEN
+        value: airtable_secret_8fh39fh39fh3
       - key: AIRTABLE_API_BASE_URL
         value: https://api.airtable.com/v0
       - key: AIRTABLE_OAUTH_AUTHORIZE_URL
