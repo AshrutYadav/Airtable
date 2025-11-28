@@ -10,7 +10,7 @@
     }
   ],
   "env": {
-    "VITE_API_BASE_URL": "https://your-render-backend.onrender.com"
+    "VITE_API_BASE_URL": "https://airtable-form-builder-api-ebzi.onrender.com"
   },
   "routes": [
     { "handle": "filesystem" },
